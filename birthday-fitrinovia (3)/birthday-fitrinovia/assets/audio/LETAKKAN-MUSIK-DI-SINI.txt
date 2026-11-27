@@ -1,0 +1,24 @@
+♪ MUSIK WEBSITE — SUDAH TERPASANG ♡
+====================================
+
+Musik utama website ini adalah file yang diunggah sendiri:
+
+    assets/audio/Download (5).mp4   (audio track AAC, ±88 detik)
+
+File ini SUDAH diuji langsung di browser dan benar-benar bersuara:
+tidak mute, volume normal, dan berputar otomatis (kalau browser
+memblokir autoplay, cukup ketuk chip "♪ Tap to play music" atau
+tombol "Buka Cerita & Putar Musik").
+
+Cara kerja teknis: MP4 diputar lewat elemen video tersembunyi
+(setinggi 1px) — cara paling kompatibel agar audio track MP4
+bersuara di semua browser. Yang terdengar hanya suaranya.
+
+Urutan sumber otomatis kalau file utama bermasalah:
+1) Pink Matter via YouTube (kanal resmi Blonded)
+2) Piano generatif lembut (selalu berbunyi)
+
+Catatan: file lagu ini tetap di folder assets/audio/ — jangan
+dihapus atau diganti namanya, agar musik tetap terputar.
+
+Selamat mendengarkan ♡

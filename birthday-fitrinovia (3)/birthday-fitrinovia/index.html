@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F0E8">
+<meta name="description" content="Sebuah hadiah ulang tahun ke-23 untuk Fitri Novia — 27 November 2026. A Birthday Story Made With Love.">
+<meta property="og:title" content="Fitri Novia — Happy 23rd Birthday ♡">
+<meta property="og:description" content="Sebuah kejutan kecil, dibuat dengan cinta. Selamat ulang tahun ke-23, Kak Fitri!">
+<meta property="og:image" content="assets/video/poster.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.9-10-9.5C.4 8.6 2 4.5 6 4.5c2.4 0 4.4 1.4 6 3.6 1.6-2.2 3.6-3.6 6-3.6 4 0 5.6 4.1 4 7C19.5 16.1 12 21 12 21z' fill='%23C58F91'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<title>Fitri Novia — A Birthday Story Made With Love ♡</title>
+</head>
+<body>
+
+<!-- ambience -->
+<div class="orbs" aria-hidden="true"><div class="orb orb--rose"></div><div class="orb orb--gold"></div><div class="orb orb--beige"></div></div>
+<canvas id="petals" aria-hidden="true"></canvas>
+<div class="warm-vignette" aria-hidden="true"></div>
+<div class="paper-grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- navigasi titik -->
+<nav class="dotnav" id="dotnav" aria-label="Navigasi bagian">
+  <button data-target="cover"><span class="tip">Sampul</span></button>
+  <button data-target="gallery"><span class="tip">Kenangan</span></button>
+  <button data-target="video"><span class="tip">Video</span></button>
+  <button data-target="letter"><span class="tip">Surat</span></button>
+  <button data-target="timeline"><span class="tip">Timeline</span></button>
+  <button data-target="special"><span class="tip">Istimewa</span></button>
+  <button data-target="reminder"><span class="tip">Pengingat</span></button>
+  <button data-target="gift"><span class="tip">Hadiah</span></button>
+  <button data-target="chapter"><span class="tip">Bab 23</span></button>
+  <button data-target="wishes"><span class="tip">Doa</span></button>
+  <button data-target="finale"><span class="tip">Penutup</span></button>
+</nav>
+
+<!-- musik — pemutar floating: piringan vinyl berputar saat lagu benar-benar diputar -->
+<div id="player" class="player" role="region" aria-label="Pemutar musik">
+  <button id="musicBtn" class="pl-toggle" aria-label="Putar atau jeda musik" title="Putar / jeda musik">
+    <span class="vinyl" aria-hidden="true"><i>♡</i></span>
+    <svg class="ic ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.4v13.2L19 12z"/></svg>
+    <svg class="ic ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3.4v13H7.5zM13.1 5.5h3.4v13h-3.4z"/></svg>
+  </button>
+  <div class="pl-meta">
+    <span class="pl-title" id="plTitle">menyiapkan…</span>
+    <span class="pl-sub" id="plState">menyiapkan…</span>
+  </div>
+  <span class="pl-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+  <button id="plVolBtn" class="pl-volbtn" aria-label="Atur volume musik" title="Volume">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5.5 6.8 9H3.5v6h3.3L11 18.5z"/><path d="M15.2 8.8a4.6 4.6 0 0 1 0 6.4M17.8 6.4a8 8 0 0 1 0 11.2"/></svg>
+  </button>
+</div>
+<button id="plTap" class="pl-tap" type="button" hidden>♪ Tap to play music</button>
+<div class="music-pop" id="musicPop">
+  <label for="volSlider">Volume musik</label>
+  <input type="range" id="volSlider" min="0" max="100" value="70" aria-label="Volume musik">
+  <p class="mnote">Musik: <b>file pilihan sendiri</b> — <b>assets/audio/Download (5).mp4</b> (diunggah sendiri, diputar tersembunyi; audio track MP4 yang bersuara). Kalau file gagal dimuat, dicoba <b>Pink Matter</b> via YouTube, lalu piano lembut sebagai cadangan.</p>
+</div>
+<div id="ytHost" aria-hidden="true"></div>
+
+<!-- ==========================================================================
+     BAGIAN 1 · OPENING — pintu album + hitung mundur sinematik 3 · 2 · 1
+     ========================================================================== -->
+<div id="intro" class="intro">
+  <div class="intro-doors" aria-hidden="true">
+    <div class="door door--l"><img src="assets/env/opening.jpg" alt="" decoding="async" fetchpriority="high"><i class="door-shade"></i></div>
+    <div class="door door--r"><img src="assets/env/opening.jpg" alt="" decoding="async" fetchpriority="high"><i class="door-shade"></i></div>
+    <span class="door-spine"></span>
+  </div>
+  <div class="intro-warm" aria-hidden="true"></div>
+  <div class="intro-rays" aria-hidden="true"></div>
+  <div class="intro-flora" aria-hidden="true">
+    <svg class="flora flora--tl" viewBox="0 0 220 220" fill="none">
+      <path d="M8 8c30 34 52 78 58 132" stroke="rgba(168,137,90,.5)" stroke-width="1.2"/>
+      <path d="M34 52c-16-2-28-12-30-26 16 2 28 12 30 26z" fill="rgba(197,143,145,.38)"/>
+      <path d="M52 88c-18 2-34-6-40-20 18-2 34 6 40 20z" fill="rgba(198,168,117,.32)"/>
+      <path d="M66 126c-16 4-32-2-40-16 16-4 32 2 40 16z" fill="rgba(197,143,145,.32)"/>
+      <circle cx="78" cy="158" r="7" fill="rgba(197,143,145,.45)"/>
+      <circle cx="92" cy="172" r="4.5" fill="rgba(198,168,117,.45)"/>
+      <circle cx="66" cy="170" r="3.5" fill="rgba(198,168,117,.38)"/>
+    </svg>
+    <svg class="flora flora--br" viewBox="0 0 220 220" fill="none">
+      <path d="M8 8c30 34 52 78 58 132" stroke="rgba(168,137,90,.5)" stroke-width="1.2"/>
+      <path d="M34 52c-16-2-28-12-30-26 16 2 28 12 30 26z" fill="rgba(197,143,145,.38)"/>
+      <path d="M52 88c-18 2-34-6-40-20 18-2 34 6 40 20z" fill="rgba(198,168,117,.32)"/>
+      <path d="M66 126c-16 4-32-2-40-16 16-4 32 2 40 16z" fill="rgba(197,143,145,.32)"/>
+      <circle cx="78" cy="158" r="7" fill="rgba(197,143,145,.45)"/>
+      <circle cx="92" cy="172" r="4.5" fill="rgba(198,168,117,.45)"/>
+      <circle cx="66" cy="170" r="3.5" fill="rgba(198,168,117,.38)"/>
+    </svg>
+    <svg class="fl-heart" viewBox="0 0 200 180">
+      <path d="M100 164 C 48 128 12 96 12 60 C 12 30 34 12 60 12 C 78 12 92 22 100 38 C 108 22 122 12 140 12 C 166 12 188 30 188 60 C 188 96 152 128 100 164 Z" fill="none" stroke="rgba(198,168,117,.45)" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="intro-inner">
+    <div class="cd-wrap" id="cdWrap" aria-hidden="true">
+      <span class="cd-ring"></span><span class="cd-ring cd-ring--2"></span>
+      <div class="cd-num cd-n1">3</div>
+      <div class="cd-num cd-n2">2</div>
+      <div class="cd-num cd-n3">1</div>
+    </div>
+    <div class="intro-bday" id="introBday">
+      <div class="ib-hb" aria-hidden="true"><em>Happy</em><span>Birthday!</span></div>
+      <div class="ib-stage2">
+        <p class="ib-eyebrow"><span class="ib-star">✦</span>The Birthday Film<span class="ib-star">✦</span></p>
+        <h1 class="ib-name" id="ibName">Fitri Novia</h1>
+        <div class="ib-rule" aria-hidden="true"><span>♡</span></div>
+        <p class="ib-sub">23<sup>rd</sup> Birthday</p>
+        <p class="ib-date">27 · November · 2026</p>
+      </div>
+    <button id="openBtn" class="btn btn--wide ib-btn"><span>Buka Cerita &amp; Putar Musik</span></button>
+    <p class="intro-hint">dibuat dengan cinta, khusus untuk kakak</p>
+    </div>
+  </div>
+  <button id="skipCd" class="skip-cd" type="button">lewati ♡</button>
+  <div class="intro-flash" aria-hidden="true"></div>
+</div>
+
+<main id="world" class="world is-hidden">
+
+  <!-- ==========================================================================
+       BAGIAN 2 · BIRTHDAY COVER — sampul majalah premium
+       ========================================================================== -->
+  <section class="scene" id="cover">
+    <span class="sec-num" aria-hidden="true">02</span>
+    <div class="env env--keep" aria-hidden="true">
+      <img class="env-img" src="assets/env/cover.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content cover">
+      <div class="cover-stage" data-tilt>
+        <div class="cover-frame anim">
+          <div class="cover-mast">
+            <span class="ed">Special Edition<b>Bab 23</b></span>
+            <span class="rule"><span class="heart">♡</span></span>
+            <span class="ed">November<b>2026</b></span>
+          </div>
+          <div class="cover-body">
+            <div class="cover-left">
+              <p class="eyebrow">The Birthday Issue</p>
+              <h2 class="cover-title">Happy <span class="bignum">23<sup>rd</sup></span> Birthday</h2>
+              <p class="cover-name">Fitri Novia</p>
+              <p class="cover-date">27 November 2026</p>
+            </div>
+            <div class="cover-right anim" style="--d:.2s">
+              <span class="cover-stamp">with<br>love<span style="font-size:1rem;display:block">♡</span></span>
+              <!-- EDITABLE: foto sampul -->
+              <figure class="pframe floaty" style="--t:8s">
+                <div class="pf-mat">
+                  <img src="assets/images/photo-3.jpg" alt="Fitri Novia membentuk hati dengan kedua tangannya" width="900" height="1600" fetchpriority="high" decoding="async">
+                </div>
+              </figure>
+              <span class="pf-shadow" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="cover-foot">
+            <span class="from">dari adikmu, dengan cinta ♡</span>
+            <a class="scroll-cue" href="#gallery">gulir untuk mulai <span class="line" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 3 · MEMORY GALLERY — enam foto asli, enam panggung unik
+       ========================================================================== -->
+  <section class="scene" id="gallery">
+    <span class="sec-num" aria-hidden="true">03</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/gallery.jpg" alt="" loading="lazy" decoding="async" style="object-position:center 66%">
+    </div>
+    <div class="content">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian tiga · galeri kenangan</p>
+        <h3 class="headline anim" style="--d:.1s">Enam kenangan, <em>satu orang yang luar biasa.</em></h3>
+        <p class="lede anim" style="--d:.2s;text-align:center">Setiap foto punya panggung dan bingkainya sendiri — geser pelan, ketuk panahnya, dan buka album kenangannya satu per satu.</p>
+      </div>
+
+      <!-- EDITABLE: enam foto asli dalam enam scene unik — jangan ganti fotonya.
+           Satu scene satu foto, dibuka satu per satu lewat panah / titik / swipe -->
+      <div class="gstage" id="gstage" data-dir="fwd">
+
+        <figure class="gscene gs-hero is-active">
+          <span class="tape tape--tl" aria-hidden="true"></span>
+          <div class="gs-frame gs-corners">
+            <img src="assets/images/photo-1.jpg" alt="Fitri Novia tersenyum di kursi merah sambil berpose peace sign" loading="lazy" decoding="async">
+            <span class="gs-no" aria-hidden="true">01</span>
+            <i class="gs-deco gd-heart" aria-hidden="true">♡</i>
+            <i class="gs-deco gd-star" aria-hidden="true">✦</i>
+          </div>
+          <figcaption class="gs-cap">Senyum paling cerah di ruangan. ♡</figcaption>
+        </figure>
+
+        <figure class="gscene gs-heart">
+          <div class="gs-frame">
+            <svg class="heart-svg" viewBox="0 0 900 920" aria-hidden="true">
+              <defs><clipPath id="heartClip"><path d="M450 828 C 208 662 58 496 58 320 C 58 168 170 70 302 70 C 371 70 428 102 450 150 C 472 102 529 70 598 70 C 730 70 842 168 842 320 C 842 496 692 662 450 828 Z"/></clipPath></defs>
+              <g clip-path="url(#heartClip)"><image href="assets/images/photo-2.jpg" x="0" y="-320" width="900" height="1600" preserveAspectRatio="xMidYMid slice"/></g>
+              <path class="heart-line" d="M450 828 C 208 662 58 496 58 320 C 58 168 170 70 302 70 C 371 70 428 102 450 150 C 472 102 529 70 598 70 C 730 70 842 168 842 320 C 842 496 692 662 450 828 Z"/>
+            </svg>
+            <span class="gs-no" aria-hidden="true">02</span>
+            <i class="gs-deco gd-h2a" aria-hidden="true">♥</i>
+            <i class="gs-deco gd-h2b" aria-hidden="true">♡</i>
+            <i class="gs-deco gd-star gd-star--gold" aria-hidden="true">✦</i>
+          </div>
+          <figcaption class="gs-cap">Keceriaan yang selalu menular. ✌</figcaption>
+        </figure>
+
+        <figure class="gscene gs-editorial">
+          <span class="tape tape--br" aria-hidden="true"></span>
+          <div class="gs-frame">
+            <div class="ed-copy" aria-hidden="true">
+              <span class="ed-no">03</span>
+              <span class="ed-kicker">✦ Portrait Study</span>
+              <span class="ed-line"></span>
+            </div>
+            <div class="ed-photo">
+              <img src="assets/images/photo-4.jpg" alt="Foto potret close-up Fitri Novia dengan riasan lembut" loading="lazy" decoding="async">
+              <span class="ed-title" aria-hidden="true">The<br><em>Portrait</em></span>
+            </div>
+            <i class="gs-deco gd-star gd-star--gold" aria-hidden="true">✦</i>
+          </div>
+          <figcaption class="gs-cap">Satu juta kehangatan dari satu senyum.</figcaption>
+        </figure>
+
+        <figure class="gscene gs-polaroid">
+          <span class="tape tape--tl" aria-hidden="true"></span>
+          <div class="gs-frame">
+            <img src="assets/images/photo-5.jpg" alt="Fitri Novia memakai topi dan kacamata sambil berpose peace sign" loading="lazy" decoding="async">
+            <span class="pol-cap">peace, topi &amp; senyum ✌ ♡</span>
+            <span class="gs-no" aria-hidden="true">04</span>
+            <i class="gs-deco gd-heart" aria-hidden="true">♡</i>
+          </div>
+          <figcaption class="gs-cap">Gaya yang selalu jadi ciri khasmu.</figcaption>
+        </figure>
+
+        <figure class="gscene gs-arch">
+          <div class="gs-frame">
+            <img src="assets/images/photo-6.jpg" alt="Kumpulan empat foto Fitri Novia di atas lantai kayu" loading="lazy" decoding="async">
+            <span class="gs-no" aria-hidden="true">05</span>
+            <i class="gs-deco gd-flora gd-flora--a" aria-hidden="true">❀</i>
+            <i class="gs-deco gd-flora gd-flora--b" aria-hidden="true">❀</i>
+            <i class="gs-deco gd-star" aria-hidden="true">✦</i>
+            <i class="gs-deco gd-h2b" aria-hidden="true">♡</i>
+          </div>
+          <figcaption class="gs-cap">Kumpulan hari-hari kecil yang berharga. ✦</figcaption>
+        </figure>
+
+        <figure class="gscene gs-cinema">
+          <div class="gs-frame">
+            <img src="assets/images/photo-3.jpg" alt="Fitri Novia membentuk hati dengan kedua tangannya" loading="lazy" decoding="async">
+            <span class="film-bar film-bar--t" aria-hidden="true"></span>
+            <span class="film-bar film-bar--b" aria-hidden="true"></span>
+            <span class="film-tag" aria-hidden="true">scene 06 · with love</span>
+            <span class="film-cap" aria-hidden="true">dua hati, satu cerita ♡</span>
+            <span class="film-glow" aria-hidden="true"></span>
+          </div>
+          <figcaption class="gs-cap">A memory I'll always keep ♡</figcaption>
+        </figure>
+      </div>
+
+      <div class="gctrl anim" style="--d:.15s">
+        <button id="gPrev" class="gbtn" aria-label="Foto sebelumnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="gcount" aria-live="polite"><span id="gNow">01</span><span class="gsep">/</span><span class="gtotal">06</span></div>
+        <div class="gdots" id="gDots" aria-label="Pilih foto"></div>
+        <button id="gNext" class="gbtn" aria-label="Foto berikutnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <p class="collage-note anim">buka kenangannya satu per satu — pilih yang paling kakak suka ♡</p>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 4 · VIDEO MEMORY
+       ========================================================================== -->
+  <section class="scene" id="video">
+    <span class="sec-num" aria-hidden="true">04</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/video.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian empat · kenangan bergerak</p>
+        <h3 class="headline anim" style="--d:.1s">A Little Memory <em>to Keep.</em></h3>
+        <p class="lede anim" style="--d:.2s;text-align:center">Tekan putar kapan pun kakak butuh sedikit kehangatan — ada suaranya juga.</p>
+      </div>
+
+      <!-- EDITABLE: video asli — assets/video/birthday-video.mp4 -->
+      <div class="cinema anim" style="--d:.22s">
+        <p class="cinema-kicker">now playing · for kakak</p>
+        <div class="cinema-frame">
+          <video id="memVideo" src="assets/video/birthday-video.mp4" poster="assets/video/poster.jpg"
+                 controls playsinline preload="metadata"></video>
+          <div class="cinema-cover" id="videoCover" role="button" tabindex="0" aria-label="Putar video kenangan">
+            <img src="assets/video/poster.jpg" alt="" aria-hidden="true">
+            <span class="cinema-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+      <p class="cinema-cap anim" style="--d:.3s">diputar penuh dengan cinta — bukan sekadar potongan momen ♡</p>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 5 · A LETTER FOR YOU
+       ========================================================================== -->
+  <section class="scene" id="letter">
+    <span class="sec-num" aria-hidden="true">05</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/letter.jpg" alt="" loading="lazy" decoding="async" style="object-position:center 58%">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian lima · dari hatiku</p>
+        <h3 class="headline anim" style="--d:.12s">Sebuah surat, <em>untuk kakak tersayang.</em></h3>
+      </div>
+
+      <div class="letter-flow" id="letterFlow">
+        <div id="envBox" class="env-letter anim" style="--d:.2s" role="button" tabindex="0" aria-label="Buka surat">
+          <div class="envelope">
+            <div class="env-paper" aria-hidden="true"></div>
+            <div class="env-body" aria-hidden="true"></div>
+            <div class="env-pocket" aria-hidden="true"></div>
+            <div class="env-flap" aria-hidden="true"></div>
+            <span class="env-seal" aria-hidden="true">♡</span>
+          </div>
+        </div>
+        <span class="env-hint" id="envHint">ketuk amplopnya untuk membuka surat</span>
+
+        <div class="paper-wrap anim" style="--d:.75s">
+          <div class="paper">
+            <span class="paper-wax" aria-hidden="true">♡</span>
+            <span class="postmark" aria-hidden="true"><span>27·11·2026<br>with love<br>for fitri</span></span>
+            <figure class="stamp" aria-hidden="true"><img src="assets/images/photo-1.jpg" alt="" loading="lazy" decoding="async"></figure>
+            <div class="paper-orn" aria-hidden="true">
+              <svg width="86" height="20" viewBox="0 0 86 20" fill="currentColor"><path d="M43 10.5c-2.2-2.6-4.6-4-7.2-4-3.4 0-6 2.3-6 5.4 0 3 2.4 5.1 5.6 5.1 3 0 5.6-1.9 7.6-6.5zM43 10.5c2.2-2.6 4.6-4 7.2-4 3.4 0 6 2.3 6 5.4 0 3-2.4 5.1-5.6 5.1-3 0-5.6-1.9-7.6-6.5z" opacity=".8"/><path d="M2 10.5h26M58 10.5h26" stroke="currentColor" stroke-width="1" opacity=".6"/><circle cx="43" cy="10.5" r="2.4"/></svg>
+            </div>
+            <p class="paper-hello">untuk kakak tersayang,</p>
+            <!-- EDITABLE: isi surat -->
+            <p class="lp dropcap anim anim--soft" style="--d:.15s">Happy birthday yang ke-23, Fitri Novia.</p>
+            <p class="lp indent anim anim--soft" style="--d:.25s">Semoga kakak selalu happy, selalu bahagia, dan selalu punya banyak alasan buat tersenyum. Semoga di umur yang baru ini, banyak hal baik datang ke kakak, semua yang kakak harapkan perlahan bisa tercapai, dan hari-hari kakak dipenuhi kebahagiaan.</p>
+            <p class="lp indent anim anim--soft" style="--d:.35s">Jangan terlalu kecapekan ya, kak. Kalau memang lagi capek, istirahat dulu. Jangan terlalu memaksakan diri buat menyelesaikan semuanya. Kakak juga perlu waktu buat diri sendiri, buat tenang, buat menikmati hari, dan buat bahagia tanpa harus selalu sibuk.</p>
+            <p class="lp indent anim anim--soft" style="--d:.45s">Jaga kesehatan, jangan lupa makan, jangan lupa istirahat yang cukup. Aku berharap kakak selalu baik-baik aja, selalu happy, dan nggak kehilangan senyum yang selama ini jadi bagian dari kakak.</p>
+            <p class="lp indent anim anim--soft" style="--d:.55s">Makasih udah jadi kakak yang begitu berarti buat aku. Mungkin aku nggak selalu bisa ngungkapin semuanya, tapi aku sayang kakak, dan aku selalu berharap yang terbaik buat kakak.</p>
+            <p class="lp indent anim anim--soft" style="--d:.65s">Semoga umur 23 ini jadi salah satu chapter paling indah dalam hidup kakak. Semoga banyak kebahagiaan, ketenangan, rezeki, orang-orang baik, dan cerita indah yang datang.</p>
+            <p class="lp indent anim anim--soft" style="--d:.75s">Happy birthday, Fitri. Stay happy, take care of yourself, and please don't forget to rest. I love you, kak.&nbsp;♡</p>
+            <p class="paper-sign">— adikmu, yang selalu sayang kakak <span class="heart">♡</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 6 · MEMORY TIMELINE — isi sendiri kenangannya
+       ========================================================================== -->
+  <section class="scene" id="timeline">
+    <span class="sec-num" aria-hidden="true">06</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/timeline.jpg" alt="" loading="lazy" decoding="async" style="object-position:center 52%">
+    </div>
+    <div class="content">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian enam · garis waktu</p>
+        <h3 class="headline anim" style="--d:.12s">Jejak kecil yang <em>layak dikenang.</em></h3>
+        <p class="lede anim" style="--d:.2s;text-align:center">Beberapa tempat untuk kenangan kalian berdua — tanggal, tempat, dan ceritanya bisa ditambahkan sendiri dengan mudah.</p>
+      </div>
+
+      <!-- KENANGAN EDITABLE: ganti judul, tanggal, dan cerita di bawah ini.
+           Tambah atau hapus .tl-item sesuai jumlah kenangan. -->
+      <div class="tl-wrap">
+        <span class="tl-line" aria-hidden="true" data-depth="-0.006"></span>
+        <div class="tl-item anim">
+          <span class="tl-dot" aria-hidden="true"><i class="ring"></i><i class="bead"></i></span>
+          <p class="tl-title">Kenangan pertama</p>
+          <p class="tl-meta">Tanggal — tulis di sini</p>
+          <p class="tl-text">Tulis cerita kecil tentang kenangan pertama yang paling kalian ingat. Satu atau dua kalimat yang hangat sudah cukup.</p>
+          <p class="tl-edit-note">✎ teks ini bisa diganti langsung di index.html</p>
+        </div>
+        <div class="tl-item anim" style="--d:.1s">
+          <span class="tl-dot" aria-hidden="true"><i class="ring"></i><i class="bead"></i></span>
+          <p class="tl-title">Kenangan berikutnya</p>
+          <p class="tl-meta">Tanggal — tulis di sini</p>
+          <p class="tl-text">Cerita kedua bisa tentang momen lucu, momen haru, atau hal kecil yang ternyata paling berkesan.</p>
+          <p class="tl-edit-note">✎ teks ini bisa diganti langsung di index.html</p>
+        </div>
+        <div class="tl-item anim" style="--d:.2s">
+          <span class="tl-dot" aria-hidden="true"><i class="ring"></i><i class="bead"></i></span>
+          <p class="tl-title">Kenangan favorit</p>
+          <p class="tl-meta">Tanggal — tulis di sini</p>
+          <p class="tl-text">Cerita ketiga — mungkin tentang tempat favorit, makanan favorit, atau kebiasaan kalian berdua.</p>
+          <p class="tl-edit-note">✎ teks ini bisa diganti langsung di index.html</p>
+        </div>
+        <div class="tl-item anim" style="--d:.3s">
+          <span class="tl-dot" aria-hidden="true"><i class="ring"></i><i class="bead"></i></span>
+          <p class="tl-title">…dan bab berikutnya</p>
+          <p class="tl-meta">27 November 2026</p>
+          <p class="tl-text">Hari ini, chapter 23 dimulai — dan hal-hal baik sedang menunggu di depan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 7 · WHY YOU'RE SPECIAL
+       ========================================================================== -->
+  <section class="scene" id="special">
+    <span class="sec-num" aria-hidden="true">07</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/special.jpg" alt="" loading="lazy" decoding="async" style="object-position:center 60%">
+    </div>
+    <div class="content">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian tujuh · kenapa kakak istimewa</p>
+        <h3 class="headline anim" style="--d:.12s">Karena kakak, <em>banyak hal jadi lebih hangat.</em></h3>
+      </div>
+
+      <!-- EDITABLE: alasan-alasan kenapa kakak berarti -->
+      <div class="special-list">
+        <div class="special-item anim" style="--d:.1s">
+          <span class="idx" aria-hidden="true">01</span>
+          <p>Terima kasih sudah menjadi kakak yang begitu berarti.</p>
+        </div>
+        <div class="special-item anim" style="--d:.18s">
+          <span class="idx" aria-hidden="true">02</span>
+          <p>Semoga kakak selalu menemukan alasan untuk bahagia.</p>
+        </div>
+        <div class="special-item anim" style="--d:.26s">
+          <span class="idx" aria-hidden="true">03</span>
+          <p>Semoga setiap usaha kakak membawa hasil yang baik.</p>
+        </div>
+        <div class="special-item anim" style="--d:.34s">
+          <span class="idx" aria-hidden="true">04</span>
+          <p>Semoga kakak selalu dikelilingi orang-orang baik.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 8 · A LITTLE REMINDER
+       ========================================================================== -->
+  <section class="scene" id="reminder">
+    <span class="sec-num" aria-hidden="true">08</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/calm.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian delapan · sedikit pengingat</p>
+        <h3 class="headline anim" style="--d:.12s">Untuk kakak, <em>yang selalu sibuk.</em></h3>
+      </div>
+
+      <!-- EDITABLE: pengingat -->
+      <div class="remind-panel anim" style="--d:.2s">
+        <div class="rule"><span class="heart">♡</span></div>
+        <div class="remind-list">
+          <p>Jangan terlalu capek, ya, Kak.</p>
+          <p>Jangan lupa istirahat.</p>
+          <p>Jaga kesehatan.</p>
+          <p>Luangkan waktu untuk diri sendiri.</p>
+          <p>Jangan lupa bahagia.</p>
+        </div>
+        <div class="rule"><span class="heart">♡</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 9 · A BIRTHDAY GIFT
+       ========================================================================== -->
+  <section class="scene sc-gift" id="gift">
+    <span class="sec-num" aria-hidden="true">09</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/gift.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian sembilan · sebuah hadiah</p>
+        <h3 class="headline anim" style="--d:.12s">Ada satu kotak lagi, <em>khusus untuk kakak.</em></h3>
+        <p class="lede anim" style="--d:.2s;text-align:center">Buka pelan-pelan. Isinya tidak bisa hilang dan tidak akan pernah usang.</p>
+      </div>
+
+      <div class="gift-zone">
+        <div id="keepsakeGift" class="gift3d anim" style="--d:.22s" role="button" tabindex="0" aria-label="Buka hadiah">
+          <div class="gift-stage">
+            <div class="gift-shadow" aria-hidden="true"></div>
+            <div class="gift-beam" aria-hidden="true"></div>
+            <div class="gift-glow" aria-hidden="true"></div>
+            <div class="gb gb--base" aria-hidden="true">
+              <i class="face f-back"></i><i class="face f-left"></i><i class="face f-right"></i>
+              <i class="face f-top"></i><i class="face f-front"></i><i class="face f-bottom"></i>
+            </div>
+            <div class="gift-contents" aria-hidden="true"><i>♡</i><i>✦</i><i>♡</i><i>✦</i><i>♡</i></div>
+            <div class="gb gb--lid" aria-hidden="true">
+              <i class="face f-left"></i><i class="face f-right"></i>
+              <i class="face f-top"></i><i class="face f-front"></i><i class="face f-back"></i>
+              <span class="bow"><i class="loop l"></i><i class="loop r"></i><i class="knot"></i><i class="tail t1"></i><i class="tail t2"></i></span>
+            </div>
+          </div>
+        </div>
+        <span class="gift-hint" id="giftHint2">ketuk pita untuk membukanya</span>
+
+        <!-- EDITABLE: pesan di dalam hadiah -->
+        <div class="gift-msg" id="keepsakeCard" aria-live="polite">
+          <div class="gm-in">
+            <p class="gm-eyebrow">a little keepsake</p>
+            <p class="gm-title">Untuk Fitri Novia</p>
+            <p class="gm-text">Halaman ini dibuat khusus untuk kakak — setiap foto, setiap kata, dan setiap bunganya. Kapan pun kakak butuh tempat untuk istirahat, tersenyum, atau sekadar ingat bahwa kakak dicintai, buka lagi halaman ini. Semua akan tetap menunggu di sini, apa adanya.</p>
+            <p class="gm-sign">dari adikmu, hari ini dan selalu ♡</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 10 · CHAPTER 23
+       ========================================================================== -->
+  <section class="scene" id="chapter">
+    <span class="sec-num" aria-hidden="true">10</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/chapter.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <p class="eyebrow eyebrow--center anim">Bagian sepuluh · bab baru</p>
+      <div class="chapter-stage">
+        <h3 class="chapter-num anim" style="--d:.15s">2<span class="g">3</span></h3>
+        <p class="chapter-sub anim" style="--d:.3s">Chapter Twenty · Three</p>
+      </div>
+      <p class="chapter-msg anim" style="--d:.4s">“May this new chapter bring you more happiness, peace, beautiful memories, and wonderful opportunities.”</p>
+      <p class="lede anim" style="--d:.5s;text-align:center">Semoga bab 23 ini sehangat sutra yang memeluknya — lembut, tenang, dan penuh hal baik. ♡</p>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 11 · MY WISHES FOR YOU
+       ========================================================================== -->
+  <section class="scene" id="wishes">
+    <span class="sec-num" aria-hidden="true">11</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/wishes.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content" style="display:flex;flex-direction:column;align-items:center">
+      <div class="sec-head sec-head--center">
+        <p class="eyebrow eyebrow--center anim">Bagian sebelas · doa-doa kecil</p>
+        <h3 class="headline anim" style="--d:.12s">My wishes <em>for you.</em></h3>
+      </div>
+
+      <!-- EDITABLE: doa-doa untuk kakak -->
+      <div class="wishes-list">
+        <div class="w anim" style="--d:.06s"><span class="wn" aria-hidden="true">i.</span><p>Semoga selalu bahagia.</p></div>
+        <div class="w anim" style="--d:.12s"><span class="wn" aria-hidden="true">ii.</span><p>Semoga selalu sehat.</p></div>
+        <div class="w anim" style="--d:.18s"><span class="wn" aria-hidden="true">iii.</span><p>Semoga segala urusan dimudahkan.</p></div>
+        <div class="w anim" style="--d:.24s"><span class="wn" aria-hidden="true">iv.</span><p>Semoga semua harapan baik perlahan tercapai.</p></div>
+        <div class="w anim" style="--d:.3s"><span class="wn" aria-hidden="true">v.</span><p>Semoga selalu dikelilingi orang-orang yang tulus.</p></div>
+        <div class="w anim" style="--d:.36s"><span class="wn" aria-hidden="true">vi.</span><p>Semoga tidak terlalu memaksakan diri.</p></div>
+        <div class="w anim" style="--d:.42s"><span class="wn" aria-hidden="true">vii.</span><p>Semoga selalu punya waktu untuk beristirahat dan menikmati hidup.</p></div>
+      </div>
+      <p class="wishes-note anim" style="--d:.5s">doa paling sederhana, dari orang yang paling sayang kakak ♡</p>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BAGIAN 12 · GRAND FINALE
+       ========================================================================== -->
+  <footer class="scene ending" id="finale">
+    <span class="sec-num" aria-hidden="true">12</span>
+    <div class="env" aria-hidden="true">
+      <img class="env-img" src="assets/env/finale.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="content ending" style="justify-content:center">
+      <div class="end-lines">
+        <p class="end-line" style="--d:.05s">Happy Birthday, Fitri Novia.</p>
+        <p class="end-line gold" style="--d:.35s">23 looks beautiful on you.</p>
+        <p class="end-line" style="--d:.65s">Stay happy, stay healthy, and never forget to take care of yourself.</p>
+      </div>
+      <div class="rule anim" style="--d:.9s"><span class="heart">♡</span></div>
+      <p class="end-close anim" style="--d:1s">dibuat dengan cinta oleh adikmu <span class="heart">♡</span></p>
+      <div class="share-qr anim" style="--d:1.2s">
+        <div class="qr-panel">
+          <div class="qr-rose-wrap" aria-hidden="true">
+            <svg class="qr-bow" viewBox="0 0 140 92">
+              <defs>
+                <linearGradient id="bowG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#e2585a"/>
+                  <stop offset=".55" stop-color="#b52f33"/>
+                  <stop offset="1" stop-color="#8e2427"/>
+                </linearGradient>
+              </defs>
+              <path d="M70 48 C 44 10 8 18 14 46 C 18 66 50 64 70 48 Z" fill="url(#bowG)"/>
+              <path d="M70 48 C 96 10 132 18 126 46 C 122 66 90 64 70 48 Z" fill="url(#bowG)"/>
+              <path d="M70 50 C 58 64 48 78 44 88 L 58 86 L 66 68 Z" fill="#9c2b2e"/>
+              <path d="M70 50 C 80 66 88 80 92 88 L 104 84 L 78 64 Z" fill="#8e2427"/>
+              <circle cx="70" cy="48" r="10" fill="#c03336"/>
+              <circle cx="70" cy="46" r="6" fill="#e2585a"/>
+            </svg>
+            <svg class="qr-rose" viewBox="0 0 200 190">
+              <defs>
+                <clipPath id="roseClip"><path d="M100 172 C 44 130 12 96 12 58 C 12 28 34 12 58 12 C 76 12 90 22 100 40 C 110 22 124 12 142 12 C 166 12 188 28 188 58 C 188 96 156 130 100 172 Z"/></clipPath>
+                <pattern id="rosePat" width="26" height="23" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+                  <rect width="26" height="23" fill="#7e2024"/>
+                  <circle cx="6" cy="6" r="5.2" fill="#b23334"/>
+                  <circle cx="3.4" cy="4.4" r="1.7" fill="#d05c5c" opacity=".8"/>
+                  <circle cx="19" cy="11" r="4.6" fill="#9c2b2e"/>
+                  <circle cx="17.6" cy="9.6" r="1.4" fill="#e07a7a" opacity=".7"/>
+                  <circle cx="12" cy="18" r="5" fill="#c94848"/>
+                  <circle cx="10.6" cy="16.6" r="1.5" fill="#e89393" opacity=".65"/>
+                </pattern>
+                <radialGradient id="roseShade" cx=".5" cy=".42" r=".62">
+                  <stop offset=".55" stop-color="rgba(0,0,0,0)"/>
+                  <stop offset="1" stop-color="rgba(0,0,0,.42)"/>
+                </radialGradient>
+              </defs>
+              <g clip-path="url(#roseClip)">
+                <rect x="0" y="0" width="200" height="190" fill="url(#rosePat)"/>
+                <rect x="0" y="0" width="200" height="190" fill="url(#roseShade)"/>
+              </g>
+              <path d="M100 172 C 44 130 12 96 12 58 C 12 28 34 12 58 12 C 76 12 90 22 100 40 C 110 22 124 12 142 12 C 166 12 188 28 188 58 C 188 96 156 130 100 172 Z" fill="none" stroke="#e2585a" stroke-width="1.4" opacity=".85"/>
+            </svg>
+          </div>
+          <div class="qr-card">
+            <span class="qr-card-heart" aria-hidden="true">♡</span>
+            <div class="sq-frame" id="qrBox" aria-label="QR code menuju halaman ini"></div>
+            <p class="sq-scan">SCAN ME ♡</p>
+          </div>
+        </div>
+        <p class="sq-title">pindai hati ini untuk membuka kejutannya ♡</p>
+        <p class="sq-note">QR di panel merah membuka halaman ini di HP lain — tujuannya sama dengan QR yang dibuat lewat <b>tools/qr-generator.html</b>.</p>
+      </div>
+      <button id="replayBtn" class="btn btn--solid btn--wide btn-replay anim" style="--d:1.35s"><span>Ulangi dari Awal</span></button>
+    </div>
+  </footer>
+</main>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<noscript><style>.world{opacity:1 !important;visibility:visible !important;height:auto !important}.intro{display:none}.anim,.end-line{opacity:1 !important;transform:none !important;filter:none !important}.letter-flow .paper-wrap{opacity:1 !important;transform:none !important}.gscene{opacity:1 !important;visibility:visible !important;position:relative !important;transform:none !important;filter:none !important}.gctrl,.gstage{min-height:auto !important}.gscene .gs-cap{opacity:1 !important;transform:none !important}</style></noscript>
+
+<script src="tools/qrcode-generator.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

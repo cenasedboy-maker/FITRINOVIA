@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Love QR Generator — Website Ulang Tahun Fitri Novia</title>
+<style>
+:root{--ivory:#F5F0E8;--beige:#E7D9C8;--gold:#C6A875;--rose:#C58F91;--mocha:#49372F;--espresso:#241D1A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--mocha);
+  background:linear-gradient(160deg,var(--ivory),var(--beige));min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;padding:32px 16px;gap:18px}
+h1{font-family:Georgia,serif;font-weight:600;font-size:clamp(1.5rem,5vw,2.1rem);color:var(--espresso);text-align:center}
+p.sub{max-width:640px;text-align:center;font-size:.95rem;line-height:1.7;color:rgba(73,55,47,.75)}
+.card{background:rgba(255,253,247,.94);border:1px solid rgba(198,168,117,.6);border-radius:16px;
+  box-shadow:0 24px 60px -24px rgba(73,55,47,.35);padding:clamp(20px,5vw,36px);
+  width:min(94vw,760px);display:flex;flex-direction:column;gap:16px}
+label{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600}
+input{width:100%;padding:14px 16px;border:1px solid rgba(198,168,117,.7);border-radius:10px;
+  font-size:1rem;color:var(--espresso);background:#fffdf7;outline:none}
+input:focus{border-color:var(--rose)}
+button{padding:13px 22px;border-radius:999px;border:1px solid var(--gold);background:var(--mocha);
+  color:var(--ivory);font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .3s}
+button:hover{background:var(--rose);border-color:var(--rose);transform:translateY(-1px)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+canvas{max-width:100%;height:auto;border-radius:12px;margin-inline:auto;display:none;
+  box-shadow:0 18px 44px -18px rgba(73,55,47,.45)}
+a.btn{display:inline-block;text-decoration:none;padding:13px 22px;border-radius:999px;
+  border:1px solid var(--gold);background:#fffdf7;color:var(--mocha);font-weight:600;cursor:pointer}
+.note{font-size:.78rem;color:rgba(73,55,47,.6);line-height:1.6}
+.note b{color:var(--mocha)}
+footer{font-size:.75rem;color:rgba(73,55,47,.5)}
+</style>
+</head>
+<body>
+<h1>Love QR Generator ♡</h1>
+<p class="sub">Masukkan URL website ulang tahun kamu <b>setelah di-hosting</b> (misalnya Netlify), lalu unduh QR-nya. QR ini sungguhan — bisa langsung dipindai kamera HP.</p>
+
+<div class="card">
+  <label for="url">URL website (contoh: https://fitrinovia.netlify.app)</label>
+  <input id="url" type="url" placeholder="https://nama-kamu.netlify.app" spellcheck="false">
+  <div class="row">
+    <button id="gen">✦ Buat QR Love</button>
+  </div>
+  <canvas id="cv" width="1764" height="2016" aria-label="Pratinjau QR"></canvas>
+  <div class="row" id="dl" hidden>
+    <a class="btn" id="dlPng" download="love-qr.png">⬇ Unduh PNG (tinggi)</a>
+    <a class="btn" id="dlSvg" download="love-qr.svg">⬇ Unduh SVG (vektor)</a>
+  </div>
+  <p class="note">Tips: pindai QR di atas dengan kamera HP untuk <b>uji sebelum dicetak</b>. Ukuran unduhan: PNG ±1764×2016 px (aman untuk cetak &amp; stiker), SVG bisa dibesarkan tanpa pecah.</p>
+</div>
+
+<footer>100% lokal — tidak ada data yang dikirim ke internet · made with love ♡</footer>
+
+<script src="qrcode-generator.js"></script>
+<script>
+(function(){
+'use strict';
+var IVORY='#F5F0E8',GOLD='#C6A875',ROSE='#C58F91',MOCHA='#49372F';
+var cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+function heart(cx,cy,s,fill){
+  ctx.beginPath();
+  for(var i=0;i<60;i++){
+    var t=Math.PI*2*i/60;
+    var x=16*Math.pow(Math.sin(t),3);
+    var y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    var px=cx+x*s,py=cy-y*s;
+    i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.closePath();ctx.fillStyle=fill;ctx.fill();
+}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function build(url){
+  var qr=qrcode(0,'H');
+  qr.addData(url);qr.make();
+  var n=qr.getModuleCount(),box=28,quiet=4;
+  var Q=(n+quiet*2)*box,padSide=box*5;
+  var heartCy=box*8.7,padTop=box*17.6,qrBottom=padTop+Q;
+  var frameTop=padTop-box*4.2,frameBot=qrBottom+box*13.6;
+  var W=Q+padSide*2,H=frameBot+box*3,mid=W/2;
+  cv.width=W;cv.height=H;
+  ctx.fillStyle=IVORY;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=GOLD;ctx.lineWidth=Math.max(3,box*.5);
+  rr(padSide-box*3,frameTop,W-(padSide-box*3)*2,frameBot-frameTop,box*3);ctx.stroke();
+  ctx.strokeStyle=ROSE;ctx.lineWidth=Math.max(2,box*.25);
+  rr(padSide-box*2,frameTop+box,W-(padSide-box*2)*2,frameBot-frameTop-box*2,box*2);ctx.stroke();
+  ctx.fillStyle=MOCHA;
+  for(var y=0;y<n;y++)for(var x=0;x<n;x++){
+    if(qr.isDark(y,x))ctx.fillRect(padSide+quiet*box+x*box,padTop+quiet*box+y*box,box-1,box-1);
+  }
+  heart(mid,heartCy,box*.5,ROSE);
+  for(var k=0;k<3;k++)heart(mid+(k-1)*box*3,qrBottom+box*3.4,box*.42,k===1?GOLD:ROSE);
+  heart(padSide/2+box,qrBottom+box*9.6,box*.3,GOLD);
+  heart(W-padSide/2-box,qrBottom+box*9.6,box*.3,GOLD);
+  var fs=box*4.6;
+  ctx.textAlign='center';
+  ctx.font='600 '+fs+'px Georgia, serif';
+  while(ctx.measureText('Scan to Open Your Birthday Surprise').width>W-padSide*2.4&&fs>box*2){
+    fs-=box*.3;ctx.font='600 '+fs+'px Georgia, serif';
+  }
+  ctx.fillStyle=MOCHA;
+  ctx.fillText('Scan to Open Your Birthday Surprise',mid,qrBottom+box*8.2+fs*.8);
+  ctx.fillStyle=GOLD;
+  ctx.font=fs*.55+'px Georgia, serif';
+  ctx.fillText('A Birthday Story Made With Love',mid,qrBottom+box*10.8+fs*.44);
+  return qr;
+}
+function toSvg(url){
+  var qr=qrcode(0,'H');qr.addData(url);qr.make();
+  var n=qr.getModuleCount(),box=28,quiet=4,mod=(n+quiet*2)*box,pad=box*5;
+  var W=mod+pad*2,H=mod+pad*2+box*9,mid=W/2;
+  var s='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  s+='<rect width="100%" height="100%" fill="'+IVORY+'"/>';
+  s+='<rect x="'+(pad-box*3)+'" y="'+(pad-box*3)+'" width="'+(W-(pad-box*3)*2)+'" height="'+(H-(pad-box*3)*2-box*4.5)+'" rx="'+box*3+'" fill="none" stroke="'+GOLD+'" stroke-width="'+Math.max(3,box*.5)+'"/>';
+  s+='<rect x="'+(pad-box*2)+'" y="'+(pad-box*2)+'" width="'+(W-(pad-box*2)*2)+'" height="'+(H-(pad-box*2)*2-box*4.5)+'" rx="'+box*2+'" fill="none" stroke="'+ROSE+'" stroke-width="'+box*.25+'"/>';
+  var d='';
+  for(var y=0;y<n;y++)for(var x=0;x<n;x++){
+    if(qr.isDark(y,x))d+='M'+(pad+x*box)+' '+(pad+y*box)+'h'+(box-1)+'v'+(box-1)+'h-'+(box-1)+'Z';
+  }
+  s+='<path d="'+d+'" fill="'+MOCHA+'"/>';
+  function hp(cx,cy,sc){
+    var p='';
+    for(var i=0;i<48;i++){
+      var t=Math.PI*2*i/48;
+      var x=16*Math.pow(Math.sin(t),3);
+      var yy=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+      p+=(i===0?'M':'L')+(cx+x*sc).toFixed(1)+' '+(cy-yy*sc).toFixed(1);
+    }
+    return '<path d="'+p+'Z" fill="'+sc+'A" />';
+  }
+  s+=hp(mid,pad-box*1.4,box*.85).replace('A','" fill="'+ROSE);
+  s+=hp(pad/2+box,H-pad-box*6-box*1.6,box*.5).replace('A','" fill="'+GOLD);
+  s+=hp(W-pad/2-box,H-pad-box*6-box*1.6,box*.5).replace('A','" fill="'+GOLD);
+  for(var k=0;k<3;k++){
+    var c=k===1?GOLD:ROSE;
+    s+=hp(mid+(k-1)*box*3.2,pad+mod+box*2.2,box*.55).replace('A','" fill="'+c);
+  }
+  s+='<text x="'+mid+'" y="'+(H-box*4)+'" text-anchor="middle" font-family="Georgia,serif" font-size="'+box*5+'" fill="'+MOCHA+'" font-weight="600">Scan to Open Your Birthday Surprise</text>';
+  s+='<text x="'+mid+'" y="'+(H-box*1.6)+'" text-anchor="middle" font-family="Georgia,serif" font-size="'+(box*2.9)+'" fill="'+GOLD+'">A Birthday Story Made With Love</text>';
+  s+='</svg>';
+  return s;
+}
+document.getElementById('gen').addEventListener('click',function(){
+  var u=document.getElementById('url').value.trim();
+  if(!u){alert('Masukkan URL website dulu ya ♡');return;}
+  if(!/^https?:\/\//i.test(u))u='https://'+u;
+  try{build(u);}catch(e){alert('URL terlalu panjang untuk QR. Coba singkatkan (mis. bit.ly).');return;}
+  cv.style.display='block';
+  var dl=document.getElementById('dl');dl.hidden=false;
+  document.getElementById('dlPng').href=cv.toDataURL('image/png');
+  var svg=toSvg(u);
+  document.getElementById('dlSvg').href='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  dl.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+document.getElementById('url').addEventListener('keydown',function(e){
+  if(e.key==='Enter')document.getElementById('gen').click();
+});
+})();
+</script>
+</body>
+</html>

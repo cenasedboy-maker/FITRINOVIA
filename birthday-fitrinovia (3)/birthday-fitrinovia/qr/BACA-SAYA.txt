@@ -1,0 +1,18 @@
+QR LOVE — CARA MEMBUAT
+=======================
+Setelah website di-hosting (misalnya Netlify) dan kamu punya URL final:
+
+CARA 1 — Tanpa install apa pun (disarankan):
+  1. Buka file tools/qr-generator.html di browser (klik dua kali).
+  2. Tempel URL website, klik "Buat QR Love".
+  3. Unduh PNG (untuk WhatsApp/print) dan SVG (vektor, bisa diperbesar).
+
+CARA 2 — Dengan Python:
+  python tools/generate_qr.py "https://nama-kamu.netlify.app"
+  Hasil ada di folder qr/
+
+CATATAN PENTING:
+- URL di QR HARUS URL final yang sudah online — jangan dipakai sebelum di-deploy.
+- Uji: pindai PNG dengan kamera HP sebelum dicetak/dikirim.
+- Desain: pola QR deep mocha di atas ivory (kontras tinggi), bingkai champagne,
+  ornamen hati dusty rose di luar pola, error correction H (tahan 30 0.000000e+00rtutup).
